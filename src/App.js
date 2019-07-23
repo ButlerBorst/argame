@@ -2,22 +2,29 @@ import ActionCable from 'actioncable'
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import ArModels from './ArModels'
+import Login  from'./Login'
+import CreateNewUser from './CreateNewUser'
+import {BrowserRouter, Redirect,Route} from 'react-router-dom'
 
 
 class App extends Component {
 
-  state = {
-    show: false
-  }
-
 
   render () {
     return (
-      <div>
-        <ArModels />
+      <BrowserRouter>
+        <div>
+          <Route exact path="/" render={() => <Redirect to="/login" />} />
+
+          <Route path="/play-game" component={ArModels} />
+
+          <Route path="/login" component={Login} />
+          <Route path="/new-user" component={CreateNewUser} />
 
 
-      </div>
+        </div>
+    </BrowserRouter>
+
     )
   }
 }

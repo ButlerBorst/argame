@@ -11,7 +11,7 @@ class arModels extends Component {
   }
 
   componentDidMount() {
-    window.fetch('http://localhost:3001/games/1').then(data => {
+    window.fetch('http://localhost:3001/games/2').then(data => {
       data.json().then(res => {
         this.setState({
           points: res.points,
@@ -25,13 +25,18 @@ class arModels extends Component {
    })
   }
 
-  handleReceiveNewGame = ({ points, opponentsPoints }) => {
-   if (points !== this.state.points && opponentsPoints !== this.state.opponentsPoints) {
+  handleReceiveNewGame = ({points, opponentsPoints}) => {
+    console.log(points, opponentsPoints)
+   if (points) {
      this.setState({
-       points,
-       opponentsPoints
+       points
      })
    }
+   if (opponentsPoints) {
+       this.setState({
+         opponentsPoints
+       })
+     }
  }
 
 
@@ -40,7 +45,7 @@ class arModels extends Component {
       this.setState(prevState => {
         console.log('previous state', prevState)
 
-        this.sub.send({points: prevState.points + 1, id: 1});
+        this.sub.send({points: prevState.points + 1, id: 2});
         return {points: prevState.points + 1}
       });
 
@@ -50,7 +55,7 @@ class arModels extends Component {
       this.setState(prevState => {
         console.log('previous state', prevState)
 
-        this.sub.send({points: prevState.points - 1, id: 1});
+        this.sub.send({points: prevState.points - 1, id: 2});
         return {points: prevState.points - 1}
       });
 
@@ -61,7 +66,7 @@ class arModels extends Component {
         this.setState(prevState => {
           console.log('previous state', prevState)
 
-          this.sub.send({opponentsPoints: prevState.opponentsPoints + 1, id: 1});
+          this.sub.send({opponentsPoints: prevState.opponentsPoints + 1, id: 2});
           return {opponentsPoints: prevState.opponentsPoints + 1}
         });
 
@@ -72,7 +77,7 @@ class arModels extends Component {
           this.setState(prevState => {
             console.log('previous state', prevState)
 
-            this.sub.send({opponentsPoints: prevState.opponentsPoints - 1, id: 1});
+            this.sub.send({opponentsPoints: prevState.opponentsPoints - 1, id: 2});
             return {opponentsPoints: prevState.opponentsPoints - 1}
           });
 
@@ -143,22 +148,96 @@ class arModels extends Component {
           <br></br>
           <button onClick={this.handleMinusClickTwo} type="button" className="btn btn-danger btn-circle btn-lg" ><i className="fa fa-minus"></i></button>
         </div>
+
+
+        //dont touch! custom maker code
         <a-scene arjs="debugUIEnabled: false;">
 
-          <a-marker preset="hiro">
-            <a-entity gltf-model='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/All.gltf' scale="-10 10 10" rotation="0 0 0" position="0 0 0">
+
+
+
+<a-light type="ambient" intensity="1">
+
+          <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Tester2.patt'>
+            <a-entity gltf-model='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/FITOKEN/FITOKEN.gltf' scale="-10 10 10" rotation="0 0 0" position="0 -1 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="9000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+          </a-marker>
+
+          <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-Tester.patt'>
+            <a-entity gltf-model='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/LearnCoSymb.gltf' scale="-10 10 10" rotation="0 0 0" position="0 -1 0">
               <a-animation attribute="rotation" to="0 360 0" dur="9000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
           </a-marker>
 
 
+          <a-marker preset='hiro'>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/NewSun/NewSun.gltf" scale="-10 10 10" rotation="0 0 0" position="0 -.1 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="60000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/rings1/rings1.gltf" scale="-10 10 10" rotation="-10 -10 10" position="0 -.1 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="80000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+          <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/rings3/rings3.gltf" scale="-10 10 10" rotation="-10 -10 10" position="0 -.1 0">
+            <a-animation attribute="rotation" to="0 -360 0" dur="40000" repeat="indefinite" easing="linear"></a-animation>
+          </a-entity>
+        </a-marker>
 
 
-          <a-marker preset='kanji'>
+//learn co token
+
+          {/*<a-marker preset=''>
             <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/LearnCoSymb.gltf" scale="-10 10 10" rotation="0 0 0" position="0 0 0">
               <a-animation attribute="rotation" to="0 360 0" dur="9000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
+          </a-marker>*/}
+
+
+          //new black hole model
+
+      <a-light type="point"  color="pink" position="-2 -90 0"></a-light>
+        <a-light type="point" color="pink" position="2 90 0"></a-light>
+          <a-marker preset='kanji'>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring11/Ring11.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="360 360 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring12/Ring12.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="-360 -360 0" dur="50000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring13/Ring13.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0 ">
+              <a-animation attribute="rotation" to="360 360 0" dur="40000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring14/Ring14.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="-360 -360 0" dur="30000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring15/Ring15.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="360 360 0" dur="20000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring16/Ring16.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="-360 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring17/Ring17.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="360 360 0" dur="5000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Blackhole/Blackhole.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
           </a-marker>
+        </a-light>
+
+
+
+
+
 
 
           <a-entity camera></a-entity>
