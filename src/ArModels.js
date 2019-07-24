@@ -184,17 +184,6 @@ class arModels extends Component {
         </a-marker>
 
 
-//learn co token
-
-          {/*<a-marker preset=''>
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/LearnCoSymb.gltf" scale="-10 10 10" rotation="0 0 0" position="0 0 0">
-              <a-animation attribute="rotation" to="0 360 0" dur="9000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-          </a-marker>*/}
-
-
-          //new black hole model
-https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-black-hole-marker.patt
       <a-light type="point"  color="pink" position="-2 -90 0"></a-light>
         <a-light type="point" color="pink" position="2 90 0"></a-light>
           <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-black-hole-marker.patt'>
