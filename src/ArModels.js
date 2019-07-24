@@ -11,7 +11,7 @@ class arModels extends Component {
   }
 
   componentDidMount() {
-    window.fetch('http://localhost:3001/games/2').then(data => {
+    window.fetch('https://tabletopargame.herokuapp.com/games/1').then(data => {
       data.json().then(res => {
         this.setState({
           points: res.points,
@@ -19,7 +19,7 @@ class arModels extends Component {
         })
       })
     })
-    const cable = ActionCable.createConsumer('ws://localhost:3001/cable')
+    const cable = ActionCable.createConsumer('https://tabletopargame.herokuapp.com/cable')
     this.sub = cable.subscriptions.create('GameChannel', {
        received: this.handleReceiveNewGame
    })
@@ -45,7 +45,7 @@ class arModels extends Component {
       this.setState(prevState => {
         console.log('previous state', prevState)
 
-        this.sub.send({points: prevState.points + 1, id: 2});
+        this.sub.send({points: prevState.points + 1, id: 1});
         return {points: prevState.points + 1}
       });
 
@@ -55,7 +55,7 @@ class arModels extends Component {
       this.setState(prevState => {
         console.log('previous state', prevState)
 
-        this.sub.send({points: prevState.points - 1, id: 2});
+        this.sub.send({points: prevState.points - 1, id: 1});
         return {points: prevState.points - 1}
       });
 
@@ -66,7 +66,7 @@ class arModels extends Component {
         this.setState(prevState => {
           console.log('previous state', prevState)
 
-          this.sub.send({opponentsPoints: prevState.opponentsPoints + 1, id: 2});
+          this.sub.send({opponentsPoints: prevState.opponentsPoints + 1, id: 1});
           return {opponentsPoints: prevState.opponentsPoints + 1}
         });
 
@@ -77,7 +77,7 @@ class arModels extends Component {
           this.setState(prevState => {
             console.log('previous state', prevState)
 
-            this.sub.send({opponentsPoints: prevState.opponentsPoints - 1, id: 2});
+            this.sub.send({opponentsPoints: prevState.opponentsPoints - 1, id: 1});
             return {opponentsPoints: prevState.opponentsPoints - 1}
           });
 

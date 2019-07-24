@@ -1,4 +1,8 @@
+
+
+
 import React, {Component} from 'react';
+import * as THREE from 'three';
 
 class Login extends Component {
 
@@ -26,7 +30,7 @@ class Login extends Component {
     let username = this.username.current.value
     let password = this.password.current.value
 
-    fetch('http://localhost:3001/api/v1/login', {
+    fetch('https://tabletopargame.herokuapp.com/api/v1/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +57,7 @@ class Login extends Component {
 
   getProfile = () => {
     let token = this.getToken()
-    fetch('http://localhost:3001/api/v1/profile', {
+    fetch('https://tabletopargame.herokuapp.com/api/v1/profile', {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -87,16 +91,25 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="App">
-        <form onSubmit={this.login}>
-          <input type="text" placeholder="username" ref={this.username} />
-          <input type="password" placeholder="password" ref={this.password} />
-          <input type="submit" value="log in" />
-          <button type="button" onClick={this.logout}>log out</button>
-          <button type="button" onClick={this.handleEdit}>edit</button>
-          <button type="button" onClick={this.handleDelete}>delete</button>
-        </form>
-      </div>
+    <div className="App">
+      <form onSubmit={this.login}>
+        <div class="form-group">
+          <label>User Name</label>
+          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="username" ref={this.username}/>
+  
+        </div>
+        <div class="form-group">
+          <label >Password</label>
+          <input type="password" class="form-control" placeholder="password" ref={this.password}/>
+        </div>
+          <input type="submit" class="btn btn-primary" value="log in" />
+        <button type="button" class="btn btn-primary" onClick={this.logout}>log out</button>
+        <button type="button" class="btn btn-primary" onClick={this.handleEdit}>edit</button>
+        <button type="button" class="btn btn-primary" onClick={this.handleDelete}>delete</button>
+      </form>
+    </div>
+
+
     );
   }
 }

@@ -21,7 +21,7 @@ class CreateNewUser extends Component {
 
 
       createUser = () =>{
-          const URL = 'http://localhost:3001/api/v1/users'
+          const URL = 'https://tabletopargame.herokuapp.com/api/v1/users'
           const userInfo = this.state
           console.log(userInfo)
           const headers = {
@@ -44,14 +44,25 @@ class CreateNewUser extends Component {
 
   render() {
     return(
-      <div>
-      <h3> Create new user: {this.state.username}</h3>
+
+      <div className="App">
+
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
-          <input onChange={this.handleChange} type="password" name="password" placeholder="password" value={this.state.password} />
-          <input type="submit"/>
+          <div class="form-group">
+            <label>UserName</label>
+            <input onChange={this.handleChange} class="form-control" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
+
+
+          </div>
+          <div class="form-group">
+            <label >Password</label>
+            <input onChange={this.handleChange} class="form-control" type="password" name="password" placeholder="password" value={this.state.password} />
+          </div>
+          <input class="btn btn-primary" type="submit"/>
         </form>
       </div>
+
+      
 
     )
   }
