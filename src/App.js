@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path="/" render={() => <Redirect to="/login" />} />
+          <Route exact path="/" render={() => <Redirect to="/new-user" />} />
 
           <Route path="/play-game" component={ArModels} />
 

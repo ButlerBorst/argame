@@ -27,12 +27,12 @@ class arModels extends Component {
 
   handleReceiveNewGame = ({points, opponentsPoints}) => {
     console.log(points, opponentsPoints)
-   if (points) {
+   if (points === 0 || points) {
      this.setState({
        points
      })
    }
-   if (opponentsPoints) {
+   if (opponentsPoints === 0 || points) {
        this.setState({
          opponentsPoints
        })
