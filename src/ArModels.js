@@ -32,7 +32,7 @@ class arModels extends Component {
        points
      })
    }
-   if (opponentsPoints === 0 || points) {
+   if (opponentsPoints === 0 || opponentsPoints) {
        this.setState({
          opponentsPoints
        })
