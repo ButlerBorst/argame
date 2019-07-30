@@ -62,7 +62,7 @@ class Lobby extends Component  {
     console.log("hJG fires")
     console.log(this.state.joinGameId)
     const token = localStorage.getItem('jwt');
-    return fetch(`http://localhost:3001/api/v1/users/${this.props.user.id}`,{
+    return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.props.user.id}`,{
        method: 'PATCH',
        headers: {'Content-Type': 'application/json',
                'Accept': 'application/json',
