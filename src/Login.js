@@ -1,8 +1,8 @@
 
 
-
 import React, {Component} from 'react';
 import * as THREE from 'three';
+import Lobby from './Lobby'
 
 class Login extends Component {
 
@@ -16,11 +16,19 @@ class Login extends Component {
     this.username = React.createRef()
     this.password = React.createRef()
 
-    if (this.getToken()) {
-      this.getProfile()
-    }
+    // // this should be in App
+    // if (this.getToken()) {
+    //   this.getProfile()
+    // }
 
+    // this should maybe be in App, depends how logging out should work
     this.logout = this.logout.bind(this)
+  }
+
+  handleOnChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   login = (ev) => {
@@ -31,6 +39,8 @@ class Login extends Component {
     let password = this.password.current.value
 
     fetch('https://tabletopargame.herokuapp.com/api/v1/login', {
+      // fetch('http://localhost:3001/api/v1/login', {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -42,8 +52,11 @@ class Login extends Component {
       console.log('login:', json)
       if (json && json.jwt) {
         this.saveToken(json.jwt)
-        this.getProfile()
-        this.props.history.push("./play-game")
+        // right now, Login handles getting the profile
+        // but really App should handle that, plus passing props to  Lobby
+        // Login should invoke a callback in its props that alters the state of App
+        this.props.getProfile()
+        this.props.history.push("./lobby")
       }
     })
   }
@@ -55,19 +68,23 @@ class Login extends Component {
     return false
   }
 
-  getProfile = () => {
-    let token = this.getToken()
-    fetch('https://tabletopargame.herokuapp.com/api/v1/profile', {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    })
-    .then(res => res.json())
-    .then(json => {
-      console.log('profile:', json)
-      this.setState({user: json.user})
-    })
-  }
+  // // this should go  in App
+  // getProfile = () => {
+  //   let token = this.getToken()
+  //   // fetch('https://tabletopargame.herokuapp.com/api/v1/profile', {
+  //     fetch('http://localhost:3001/api/v1/profile', {
+  //
+  //     headers: {
+  //       'Authorization': 'Bearer ' + token
+  //     }
+  //   })
+  //   .then(res => res.json())
+  //   .then(json => {
+  //     console.log('profile:', json)
+  //     // user should be in App state, not Login state, so it can easily be passed to Lobby + beyond
+  //     this.setState({user: json.user})
+  //   })
+  // }
 
   saveToken(jwt) {
     localStorage.setItem('jwt', jwt)
@@ -81,6 +98,7 @@ class Login extends Component {
     return localStorage.getItem('jwt')
   }
 
+  // IDK
   handleEdit = () => {
     this.props.history.push("./edit-user")
   }
@@ -95,12 +113,12 @@ class Login extends Component {
       <form onSubmit={this.login}>
         <div class="form-group">
           <label>User Name</label>
-          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="username" ref={this.username}/>
-  
+          <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="username" onChange={this.handleOnChange} ref={this.username}/>
+
         </div>
         <div class="form-group">
           <label >Password</label>
-          <input type="password" class="form-control" placeholder="password" ref={this.password}/>
+          <input type="password" name="password"class="form-control" placeholder="password" onChange={this.handleOnChange} ref={this.password}/>
         </div>
           <input type="submit" class="btn btn-primary" value="log in" />
         <button type="button" class="btn btn-primary" onClick={this.logout}>log out</button>

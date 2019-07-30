@@ -7,7 +7,10 @@ class CreateNewUser extends Component {
 
   state = {
   	username: '',
-    password: ''
+    password: '',
+    win: 0,
+    loss: 0,
+    points: 0
   }
 
   handleChange = event => {
@@ -22,6 +25,8 @@ class CreateNewUser extends Component {
 
       createUser = () =>{
           const URL = 'https://tabletopargame.herokuapp.com/api/v1/users'
+          // const URL = 'http://localhost:3001/api/v1/users'
+
           const userInfo = this.state
           console.log(userInfo)
           const headers = {
@@ -62,7 +67,7 @@ class CreateNewUser extends Component {
         </form>
       </div>
 
-      
+
 
     )
   }

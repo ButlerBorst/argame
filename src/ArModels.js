@@ -6,47 +6,123 @@ import { render } from 'react-dom'
 class arModels extends Component {
 
   state = {
-    points: 0,
-    opponentsPoints: 0
+    player1: "",
+    player2: "",
+    win: 0,
+    login:0,
+    points1: 0,
+    points2: 0
   }
 
   componentDidMount() {
-    window.fetch('https://tabletopargame.herokuapp.com/games/1').then(data => {
-      data.json().then(res => {
+    // window.fetch('https://tabletopargame.herokuapp.com/games/1').then(data => {
+    // console.log("game id:?", this.props.gameRoom)
+    window.fetch(`https://tabletopargame.herokuapp.com/games/${this.props.gameRoom}`)
+    .then(data => data.json())
+    .then(data => {
+      let players = data.users
+      console.log("data", players)
+
+      const cable = ActionCable.createConsumer('https://tabletopargame.herokuapp.com/cable')
+      // const cable = ActionCable.createConsumer('ws://localhost:3001/cable')
+
+      this.sub = cable.subscriptions.create('GameChannel', {
+        received: this.handleReceiveNewGame
+      });
+
+      // if two players returned  by fetch, you are joining an existing game
+      // after updating state for both players, send an update to the cable to
+      // announce you have joined
+      if(players[0] && players[1]){
         this.setState({
-          points: res.points,
-          opponentsPoints: res.opponentsPoints
+          player1: players[0],
+          points1: players[0].points,
+          player2: players[1],
+          points2: players[1].points
         })
-      })
+        console.log("sending to cable:", players[1].id, players[1].points, players[1].username)
+        setTimeout(()=> {
+          console.log("waited for timeout  already")
+          this.sub.send({
+            user_id: players[1].id,
+            points: players[1].points,
+            username: players[1].username
+          })
+        }, 5000);
+
+      }
+      // if only one player returned, you  are the only player in  the game so far,
+      // so just set yourself to player 1 in state
+      else if (players[0]) {
+        this.setState({
+          player1: players[0],
+          points1: players[0].points
+        })
+      }
     })
-    const cable = ActionCable.createConsumer('https://tabletopargame.herokuapp.com/cable')
-    this.sub = cable.subscriptions.create('GameChannel', {
-       received: this.handleReceiveNewGame
-   })
-  }
+}
 
-  handleReceiveNewGame = ({points, opponentsPoints}) => {
-    console.log(points, opponentsPoints)
-   if (points === 0 || points) {
-     this.setState({
-       points
-     })
-   }
-   if (opponentsPoints === 0 || opponentsPoints) {
-       this.setState({
-         opponentsPoints
-       })
-     }
+
+  handleReceiveNewGame = (args) => {
+    const {user_id, points, username} = args
+    console.log(user_id, points, args)
+    if (points === 0 || points) {
+      if (user_id === this.state.player1.id){
+        this.setState({
+          points1: points
+        })
+      } else if (user_id === this.state.player2.id) {
+        this.setState({
+          points2: points
+        })
+      } else if (this.state.player2 === ""){
+        this.setState({
+          player2: {id: user_id, username: username},
+          points2: points
+        })
+      }
+    }
+     // if (this.state.player1.id === user_id) {
+     //   this.setState({
+     //     points: points
+     //   })
+     // } if ((points === 0 || points) && (this.state.player2.id === user_id)) {
+     //   this.setState({
+     //     opponentsPoints: points
+     //   })
+     // } if (user_id !==  this.state.player1.id && this.state.player2 == "" ) {
+     //   this.setState({
+     //     player2: {id: user_id, username: username},
+     //     opponentsPoints: points
+     //   })
+     // }
  }
-
+ //  handleReceiveNewGame = ({points, opponentsPoints}) => {
+ //    console.log(points, opponentsPoints)
+ //   if (points === 0 || points) {
+ //     this.setState({
+ //       points
+ //     })
+ //   }
+ //   if (opponentsPoints === 0 || opponentsPoints) {
+ //       this.setState({
+ //         opponentsPoints
+ //       })
+ //     }
+ // }
 
 
   handlePlusClick = () => {
       this.setState(prevState => {
         console.log('previous state', prevState)
-
-        this.sub.send({points: prevState.points + 1, id: 1});
-        return {points: prevState.points + 1}
+        // once you know who player 1 is, send their ID
+        this.sub.send({
+          user_id: prevState.player1.id,
+          points: prevState.points1 + 1,
+          username: prevState.player1.username
+        })
+        // this.sub.send({points: prevState.points + 1, id: 1});
+        return {points1: prevState.points1 + 1}
       });
 
     };
@@ -55,8 +131,12 @@ class arModels extends Component {
       this.setState(prevState => {
         console.log('previous state', prevState)
 
-        this.sub.send({points: prevState.points - 1, id: 1});
-        return {points: prevState.points - 1}
+        this.sub.send({
+          user_id: prevState.player1.id,
+          points: prevState.points1 - 1,
+          username: prevState.player1.username
+        })
+        return {points1: prevState.points1 - 1}
       });
 
     };
@@ -66,8 +146,12 @@ class arModels extends Component {
         this.setState(prevState => {
           console.log('previous state', prevState)
 
-          this.sub.send({opponentsPoints: prevState.opponentsPoints + 1, id: 1});
-          return {opponentsPoints: prevState.opponentsPoints + 1}
+          this.sub.send({
+            user_id: prevState.player2.id,
+            points: prevState.points2 + 1,
+            username: prevState.player2.username
+          })
+          return {points2: prevState.points2 + 1}
         });
 
       };
@@ -77,13 +161,19 @@ class arModels extends Component {
           this.setState(prevState => {
             console.log('previous state', prevState)
 
-            this.sub.send({opponentsPoints: prevState.opponentsPoints - 1, id: 1});
-            return {opponentsPoints: prevState.opponentsPoints - 1}
+            this.sub.send({
+              user_id: prevState.player2.id,
+              points: prevState.points2 - 1,
+              username: prevState.player2.username
+
+            })
+            return {points2: prevState.points2 - 1}
           });
 
         };
 
   render() {
+
     return (
       <div>
         <div id="modal-button">
@@ -125,13 +215,13 @@ class arModels extends Component {
 
         <div id="user-1">
           <button type="button" class="btn btn-primary" disabled>
-            @Username <span class="badge badge-light">{this.state.points}</span>
+             {this.state.player1.username}    <span class="badge badge-light">{this.state.points1}</span>
           </button>
         </div>
 
         <div id="user-2">
           <button type="button" class="btn btn-danger" disabled>
-            @Username <span class="badge badge-light">{this.state.opponentsPoints}</span>
+            {this.state.player2.username}    <span class="badge badge-light">{this.state.points2}</span>
           </button>
         </div>
 
@@ -150,14 +240,10 @@ class arModels extends Component {
         </div>
 
 
-        //dont touch! custom maker code
-        <a-scene arjs="debugUIEnabled: false;">
 
+    <a-scene arjs="debugUIEnabled: false;">
 
-
-
-<a-light type="ambient" intensity="1">
-
+        <a-light type="ambient" intensity="1">
           <a-marker preset='hiro'>
             <a-entity gltf-model='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/FITOKEN/FITOKEN.gltf' scale="-10 10 10" rotation="0 0 0" position="0 -1 0">
               <a-animation attribute="rotation" to="0 360 0" dur="9000" repeat="indefinite" easing="linear"></a-animation>
@@ -171,7 +257,7 @@ class arModels extends Component {
           </a-marker>
 
 
-          <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-Sun-Marker-Colored.patt'>
+        <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-Sun-Marker-Colored.patt'>
             <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/NewSun/NewSun.gltf" scale="-10 10 10" rotation="0 0 0" position="0 -.1 0">
               <a-animation attribute="rotation" to="0 360 0" dur="60000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
@@ -223,15 +309,9 @@ class arModels extends Component {
           </a-marker>
         </a-light>
 
-
-
-
-
-
-
-          <a-entity camera></a-entity>
-          </a-scene>
-        </div>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </div>
 
 
 
