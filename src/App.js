@@ -88,6 +88,7 @@ class App extends Component {
     .then(res => res.json())
     .then(json => {
       console.log('profile:', json)
+      // user should be in App state, not Login state, so it can easily be passed to Lobby + beyond
       this.setState({user: json.user, gameRoom: json.user.game_id })
     })
   }
