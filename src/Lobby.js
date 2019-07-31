@@ -113,19 +113,7 @@ class Lobby extends Component  {
         </div>
         <h1 class="display-4 text-center">{this.props.gameRoom}</h1>
       </div>
-    {/*
-      <h1 class="h2">Welcome: {this.props.user.username}</h1>
-      <br></br>
-      <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
-      <h1>{this.props.gameRoom}</h1>
-      <form onSubmit={this.handleJoinGame}>
-        <div class="form-group">
-          <label for="game room">Game Room</label>
-          <input onChange={this.gameState} type="text" class="form-control" placeholder="Enter Game Room Number"/>
-        </div>
-          <input type="submit" className="btn btn-primary" value="Join Game"/>
-      </form>
-      </div>*/}
+
     )
   }
 }
