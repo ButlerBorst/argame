@@ -38,6 +38,38 @@ code {
  display: none;
 }
 
+#welcome {
+  position: fixed;
+  right: 5%;
+}
+
+#logoutButton {
+  position: fixed;
+  right: 5%;
+
+  width:25%;
+
+  z-index: 1;
+}
+
+#loginButton {
+  position: fixed;
+  right: 35%;
+
+  width:25%;
+
+  z-index: 1;
+}
+
+#createUserButton {
+  position: fixed;
+  right: 5%;
+
+  width:25%;
+
+  z-index: 1;
+}
+
 #modal-button {
   position: fixed;
   bottom: 10px;

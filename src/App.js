@@ -26,6 +26,7 @@ class App extends Component {
   handleCreateGame = () => {
     console.log("in fetch")
    fetch('https://tabletopargame.herokuapp.com/games', {
+     // fetch('http://localhost:3001/games', {
 
      method: "POST",
 
@@ -53,6 +54,8 @@ class App extends Component {
    console.log(this.state.gameRoom)
    const token = localStorage.getItem('jwt');
    return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.state.user.id}`,{
+     // return fetch(`http://localhost3001/api/v1/users/${this.state.user.id}`,{
+
       method: 'PATCH',
       headers: {'Content-Type': 'application/json',
               'Accept': 'application/json',

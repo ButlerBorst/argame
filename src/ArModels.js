@@ -15,9 +15,10 @@ class arModels extends Component {
   }
 
   componentDidMount() {
-    // window.fetch('https://tabletopargame.herokuapp.com/games/1').then(data => {
     // console.log("game id:?", this.props.gameRoom)
     window.fetch(`https://tabletopargame.herokuapp.com/games/${this.props.gameRoom}`)
+    // window.fetch(`http://localhost3001/games/${this.props.gameRoom}`)
+
     .then(data => data.json())
     .then(data => {
       let players = data.users

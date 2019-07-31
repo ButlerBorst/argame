@@ -54,16 +54,27 @@ class CreateNewUser extends Component {
 
         <form onSubmit={this.handleSubmit}>
           <div class="form-group">
-            <label>UserName</label>
-            <input onChange={this.handleChange} class="form-control" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <h1 class="display-4 text-center">Wecome to tARble</h1>
+          <br></br>
+          <br></br>
+          <br></br>
+            <label class="h2">   UserName</label>
+            <input onChange={this.handleChange} class="form-control form-control-lg" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
 
 
           </div>
+          <br></br>
+          <br></br>
           <div class="form-group">
-            <label >Password</label>
-            <input onChange={this.handleChange} class="form-control" type="password" name="password" placeholder="password" value={this.state.password} />
+            <label class="h2"> Password</label>
+            <input onChange={this.handleChange} class="form-control form-control-lg" type="password" name="password" placeholder="password" value={this.state.password} />
           </div>
-          <input class="btn btn-primary" type="submit"/>
+          <input class="btn btn-primary" id="createUserButton" type="submit"/>
         </form>
       </div>
 

@@ -63,6 +63,8 @@ class Lobby extends Component  {
     console.log(this.state.joinGameId)
     const token = localStorage.getItem('jwt');
     return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.props.user.id}`,{
+      // return fetch(`http://localhost:3001/api/v1/users/${this.props.user.id}`,{
+
        method: 'PATCH',
        headers: {'Content-Type': 'application/json',
                'Accept': 'application/json',
@@ -86,16 +88,31 @@ class Lobby extends Component  {
   render(){
     return(
       <div>
-      <h1>Welcome: {this.props.user.username}</h1>
       <br></br>
-      <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
-      <h1>{this.props.gameRoom}</h1>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <h1 class="h1">Welcome: {this.props.user.username}</h1>
+      <br></br>
       <form onSubmit={this.handleJoinGame}>
         <div class="form-group">
-          <label for="game room">Game Room</label>
+          <label class="h3" for="game room">Game Room</label>
           <input onChange={this.gameState} type="text" class="form-control" placeholder="Enter Game Room Number"/>
         </div>
-          <input type="submit" className="btn btn-primary" value="Join Game"/>
+        <br></br>
+        <br></br>
+
+          <div class="text-center">
+          <input type="submit" id="joinGameButton" className="btn btn-primary pull-center" value="Join Game"/>
+          </div>
+          <br></br>
+          <br></br>
+          <div class="text-center">
+          <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
+          </div>
+          <h1 class="display-4 text-center">{this.props.gameRoom}</h1>
       </form>
       </div>
     )

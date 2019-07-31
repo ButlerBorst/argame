@@ -112,18 +112,26 @@ class Login extends Component {
     <div className="App">
       <form onSubmit={this.login}>
         <div class="form-group">
-          <label>User Name</label>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <h1 class="display-4 text-center">tARble</h1>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <label class="h2">User Name</label>
           <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="username" onChange={this.handleOnChange} ref={this.username}/>
 
         </div>
         <div class="form-group">
-          <label >Password</label>
+          <label class="h2">Password</label>
           <input type="password" name="password"class="form-control" placeholder="password" onChange={this.handleOnChange} ref={this.password}/>
         </div>
-          <input type="submit" class="btn btn-primary" value="log in" />
-        <button type="button" class="btn btn-primary" onClick={this.logout}>log out</button>
-        <button type="button" class="btn btn-primary" onClick={this.handleEdit}>edit</button>
-        <button type="button" class="btn btn-primary" onClick={this.handleDelete}>delete</button>
+          <input type="submit" id="loginButton" class="btn btn-primary" value="log in" />
+        <button type="button" id="logoutButton" class="btn btn-primary" onClick={this.logout}>log out</button>
+
       </form>
     </div>
 
