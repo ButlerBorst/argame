@@ -38,6 +38,11 @@ code {
  display: none;
 }
 
+#rulesImage {
+  height: 350px;
+  width: 300px
+}
+
 #welcome {
   position: fixed;
   right: 5%;
@@ -70,8 +75,18 @@ code {
 
 #modal-button {
   position: fixed;
-  bottom: 10px;
-  left: 50%;
+  bottom: 3%;
+  left: 40%;
+  width:100%;
+
+  z-index: 1;
+
+}
+
+#modal-button2 {
+  position: fixed;
+  bottom: 3%;
+  left: 60%;
   width:100%;
 
   z-index: 1;
@@ -81,7 +96,7 @@ code {
 #winnerCard {
   position: fixed;
   top: 25%;
-  left: 35%;
+  left: 47.5%;
   text-align: center;
   z-index: 1;
 }

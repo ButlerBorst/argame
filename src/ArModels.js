@@ -1,7 +1,7 @@
 import ActionCable from 'actioncable'
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-
+import image  from './Rulesheetinfo.png'
 
 class arModels extends Component {
 
@@ -291,6 +291,7 @@ handlePlayer2Loss = () => {
 
       handleHomeClick = () => {
         this.props.history.push('./lobby')
+        window.location.reload();
       }
 
       // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring13/Ring13.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0 ">
@@ -323,8 +324,33 @@ handlePlayer2Loss = () => {
       <div>
 
         <div id="modal-button">
-          <button onClick={this.handleHomeClick} type="button" className="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-home"></i>
+          <button onClick={this.handleHomeClick} type="button" className="btn btn-primary btn-circle btn-lg" ><i className="fa fa-home"></i>
           </button>
+        </div>
+
+        <div id="modal-button2">
+          <button type="button" className="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-book"></i>
+          </button>
+        </div>
+
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">tARble Rules</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" >
+                <img id="rulesImage" src={image} />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="user-1">

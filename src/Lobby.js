@@ -6,6 +6,11 @@ import LeaderBoard from './LeaderBoard'
 
 class Lobby extends Component  {
 
+  constructor(){
+    super();
+    // window.location.reload();
+  }
+
   state = {
     joinGameId: '',
     leaderboard: []
@@ -50,6 +55,11 @@ class Lobby extends Component  {
  //      })
  //  }
   //
+  // componentDidMount(){
+    // window.location.reload();
+  // }
+
+
 
   gameState = (e) => {
     this.setState({

@@ -105,6 +105,7 @@ class App extends Component {
       console.log("no profile", json)
       localStorage.setItem('jwt', "")
     }
+
     })
   }
 
