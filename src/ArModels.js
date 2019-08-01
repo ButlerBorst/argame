@@ -399,7 +399,7 @@ handlePlayer2Loss = () => {
 
 
 
-    <a-scene arjs="debugUIEnabled: false;">
+    <a-scene arjs="debugUIEnabled: false;" vr-mode-ui="enabled: false">
 
         <a-light type="ambient" intensity="1">
           <a-marker preset='hiro'>
