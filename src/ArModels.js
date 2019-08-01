@@ -1,7 +1,7 @@
 import ActionCable from 'actioncable'
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import image  from './Rulesheetinfo.png'
+import image  from './NewRuleSheet.png'
 
 class arModels extends Component {
 
@@ -324,12 +324,12 @@ handlePlayer2Loss = () => {
       <div>
 
         <div id="modal-button">
-          <button onClick={this.handleHomeClick} type="button" className="btn btn-primary btn-circle btn-lg" ><i className="fa fa-home"></i>
+          <button onClick={this.handleHomeClick} type="button" className="btn btn-light btn-circle btn-lg" ><i className="fa fa-home"></i>
           </button>
         </div>
 
         <div id="modal-button2">
-          <button type="button" className="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-book"></i>
+          <button type="button" className="btn btn-light btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-book"></i>
           </button>
         </div>
 
@@ -427,20 +427,37 @@ handlePlayer2Loss = () => {
           </a-entity>
         </a-marker>
 
+        <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-sunattempt.patt'>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/NewSun/NewSun.gltf" scale="-10 10 10" rotation="0 0 0" position="0 -.1 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="60000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/rings1/rings1.gltf" scale="-10 10 10" rotation="-10 -10 10" position="0 -.1 0">
+              <a-animation attribute="rotation" to="0 360 0" dur="80000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+          <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/rings3/rings3.gltf" scale="-10 10 10" rotation="-10 -10 10" position="0 -.1 0">
+            <a-animation attribute="rotation" to="0 -360 0" dur="40000" repeat="indefinite" easing="linear"></a-animation>
+          </a-entity>
+        </a-marker>
+
         </a-light>
 
 
           <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-black-hole-marker.patt'>
-
             <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/simplerblackhole/simplerblackhole.gltf"  scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
               <a-animation attribute="rotation" to="0 0 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
-
-
             <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/darkerblackholering/darkerblackholering.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
               <a-animation attribute="rotation" to="0 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
+          </a-marker>
 
+          <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-blackholeattempt.patt'>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/simplerblackhole/simplerblackhole.gltf"  scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="0 0 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/darkerblackholering/darkerblackholering.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="0 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
+            </a-entity>
           </a-marker>
 
       <a-entity camera></a-entity>

@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color: lightblue !important; */
 }
 
 code {
@@ -39,8 +40,8 @@ code {
 }
 
 #rulesImage {
-  height: 350px;
-  width: 300px
+  height: 500px;
+  width: 465px
 }
 
 #welcome {
@@ -86,7 +87,7 @@ code {
 #modal-button2 {
   position: fixed;
   bottom: 3%;
-  left: 60%;
+  left: 55%;
   width:100%;
 
   z-index: 1;

@@ -8,6 +8,7 @@ class Lobby extends Component  {
 
   constructor(){
     super();
+      this.logout = this.logout.bind(this)
     // window.location.reload();
   }
 
@@ -16,48 +17,16 @@ class Lobby extends Component  {
     leaderboard: []
   }
 
- //  handleCreateGame = () => {
- //    console.log("in fetch")
- //   fetch('http://localhost:3001/games', {
- //
- //     method: "POST",
- //
- //     headers: {
- //       'Accept': 'application/json',
- //       'Content-Type': 'application/json',
- //
- //     },
- //    body: JSON.stringify()
- //   })
- //   .then(res => res.json())
- //   .then(data => {
- //
- //    this.setState({gameRoom: data.data.id})
- //   })
- //   .then(this.handleEditUser)
- // }
+  clearToken(jwt) {
+    localStorage.setItem('jwt', '')
+  }
 
- // handleEditUser = () => {
- //   console.log(this.state.gameRoom)
- //   const token = localStorage.getItem('jwt');
- //   return fetch(`http://localhost:3001/api/v1/users/${this.props.user.id}`,{
- //      method: 'PATCH',
- //      headers: {'Content-Type': 'application/json',
- //              'Accept': 'application/json',
- //              'Authorization': 'Bearer ' + token
- //            },
- //      body: JSON.stringify({
- //        game_id: this.state.gameRoom
- //      })
- //    }).then( resp => resp.json())
- //      .then( data => {
- //        console.log(data)
- //      })
- //  }
-  //
-  // componentDidMount(){
-    // window.location.reload();
-  // }
+  logout() {
+    this.clearToken()
+    this.setState({username: ''})
+    this.props.history.push("./login")
+    return false
+  }
 
 
 
@@ -92,6 +61,7 @@ class Lobby extends Component  {
    handleEnterGame = () => {
      this.props.handleSetGameId(this.state.joinGameId)
       this.props.history.push("./play-game")
+      document.body.requestFullscreen();
    }
 
    handleLeaderBoard = () => {
@@ -120,20 +90,19 @@ class Lobby extends Component  {
       <br></br>
       <br></br>
       <br></br>
-      <br></br>
       <form onSubmit={this.handleJoinGame}>
         <div class="form-group">
           <label class="h3" for="game room">Game Room</label>
           <input onChange={this.gameState} type="text" class="form-control" placeholder="Enter Game Room Number"/>
         </div>
-        <br></br>
-        <br></br>
+
+
 
           <div class="text-center">
           <input type="submit" id="joinGameButton" className="btn btn-primary pull-center" value="Join Game"/>
           </div>
           <br></br>
-          <br></br>
+
         </form>
         <div class="text-center">
         <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
@@ -142,6 +111,10 @@ class Lobby extends Component  {
 
         <div id="leaderboard-button" class="text-center">
           <input  type="submit" onClick={this.handleLeaderBoard} className="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter" value="Leader Board"/>
+        </div>
+          <br></br>
+        <div class="text-center">
+          <input  type="submit" onClick={this.logout} className="btn btn-primary " value="Logout"/>
         </div>
 
         <LeaderBoard leaderboardprops={this.state.leaderboard} />

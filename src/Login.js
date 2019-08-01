@@ -22,7 +22,7 @@ class Login extends Component {
     // }
 
     // this should maybe be in App, depends how logging out should work
-    this.logout = this.logout.bind(this)
+    // this.logout = this.logout.bind(this)
   }
 
   handleOnChange = (e) => {
@@ -61,12 +61,12 @@ class Login extends Component {
     })
   }
 
-  logout() {
-    this.clearToken()
-    this.setState({username: ''})
-    this.props.history.push("./new-user")
-    return false
-  }
+  // logout() {
+  //   this.clearToken()
+  //   this.setState({username: ''})
+  //   this.props.history.push("./new-user")
+  //   return false
+  // }
 
   // // this should go  in App
   // getProfile = () => {
@@ -89,10 +89,10 @@ class Login extends Component {
   saveToken(jwt) {
     localStorage.setItem('jwt', jwt)
   }
-
-  clearToken(jwt) {
-    localStorage.setItem('jwt', '')
-  }
+  //
+  // clearToken(jwt) {
+  //   localStorage.setItem('jwt', '')
+  // }
 
   getToken(jwt) {
     return localStorage.getItem('jwt')
