@@ -13,6 +13,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+.firstpage {
+  background-color: lightblue;
+  height: 100vh;
+}
+
+.leaderBoard {
+  background-color: lightpink;
+  height: 100vh;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
@@ -53,14 +72,14 @@ code {
   position: fixed;
   right: 5%;
 
-  width:25%;
+  width:35%;
 
   z-index: 1;
 }
 
 #loginButton {
   position: fixed;
-  right: 35%;
+  right: 45%;
   width:25%;
   z-index: 1;
 }

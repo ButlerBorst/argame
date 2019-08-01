@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { withRouter } from 'react-router';
 import {BrowserRouter, Redirect,Route} from 'react-router-dom'
 import LeaderBoard from './LeaderBoard'
+import image from './Battle-Ar-Logo.png'
 
 class Lobby extends Component  {
 
@@ -84,37 +85,39 @@ class Lobby extends Component  {
 
   render(){
     return(
-      <div>
+      <div class="firstpage">
       <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
+      <h1 class="h1 text-center"> Play Battle-AR </h1>
+      <img id="logo" class="center" src={image} />
+
+
+
       <form onSubmit={this.handleJoinGame}>
         <div class="form-group">
-          <label class="h3" for="game room">Game Room</label>
-          <input onChange={this.gameState} type="text" class="form-control" placeholder="Enter Game Room Number"/>
+          <label class="h4" for="game room">Game Room</label>
+          <input onChange={this.gameState} type="text" class="form-control form-control-lg" placeholder="Enter Game Room Number"/>
         </div>
 
 
 
           <div class="text-center">
-          <input type="submit" id="joinGameButton" className="btn btn-primary pull-center" value="Join Game"/>
+          <input type="submit" id="joinGameButton" className="btn btn-primary btn-md pull-center" value="Join Game"/>
           </div>
-          <br></br>
-
         </form>
+
         <div class="text-center">
-        <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
+        <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary btn-md" value="Create Game"/>
         </div>
-        <h1 class="display-4 text-center">{this.props.gameRoom}</h1>
+        <h1 class="h2 text-center">{this.props.gameRoom}</h1>
 
         <div id="leaderboard-button" class="text-center">
-          <input  type="submit" onClick={this.handleLeaderBoard} className="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter" value="Leader Board"/>
+          <input  type="submit" onClick={this.handleLeaderBoard} className="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModalCenter" value="Leader Board"/>
         </div>
+
           <br></br>
+
         <div class="text-center">
-          <input  type="submit" onClick={this.logout} className="btn btn-primary " value="Logout"/>
+          <input  type="submit" onClick={this.logout} className="btn btn-primary btn-md" value="Logout"/>
         </div>
 
         <LeaderBoard leaderboardprops={this.state.leaderboard} />

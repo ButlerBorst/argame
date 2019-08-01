@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom'
-
+import image from './Battle-Ar-Logo.png'
 
 class CreateNewUser extends Component {
 
@@ -50,32 +50,29 @@ class CreateNewUser extends Component {
   render() {
     return(
 
-      <div className="App">
-
-        <form onSubmit={this.handleSubmit}>
-          <div class="form-group">
-
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <h1 class="display-4 text-center">Wecome to tARble</h1>
-          <br></br>
-          <br></br>
-          <br></br>
-            <label class="h2">   UserName</label>
-            <input onChange={this.handleChange} class="form-control form-control-lg" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
+      <div className="firstpage">
+      <div>
+      <br></br>
+      <h1 class="h1 text-center"> Welcome To </h1>
+        <img id="logo" class="center" src={image} />
+          <form onSubmit={this.handleSubmit}>
+            <div class="form-group">
+            <h1 class="h2 text-center"> Create Account </h1>
 
 
-          </div>
-          <br></br>
+            <br></br>
+              <label class="h4">   UserName</label>
+              <input onChange={this.handleChange} class="form-control form-control-lg" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
+            </div>
+
           <br></br>
           <div class="form-group">
-            <label class="h2"> Password</label>
+            <label class="h4"> Password</label>
             <input onChange={this.handleChange} class="form-control form-control-lg" type="password" name="password" placeholder="password" value={this.state.password} />
           </div>
-          <input class="btn btn-primary" id="createUserButton" type="submit"/>
+          <input class="btn btn-primary btn-lg" id="createUserButton" type="submit"/>
         </form>
+        </div>
       </div>
 
 

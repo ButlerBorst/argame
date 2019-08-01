@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import * as THREE from 'three';
 import Lobby from './Lobby'
+import image from './Battle-Ar-Logo.png'
 
 class Login extends Component {
 
@@ -61,6 +62,10 @@ class Login extends Component {
     })
   }
 
+  newUser = () => {
+    this.props.history.push("./new-user")
+  }
+
   // logout() {
   //   this.clearToken()
   //   this.setState({username: ''})
@@ -109,28 +114,27 @@ class Login extends Component {
 
   render() {
     return (
-    <div className="App">
+    <div className="firstpage">
+
       <form onSubmit={this.login}>
         <div class="form-group">
           <br></br>
+          <h1 class="display-5 text-center">Please Log In</h1>
+        
+          <img id="logo" class="center" src={image} />
           <br></br>
           <br></br>
-          <br></br>
-          <h1 class="display-4 text-center">tARble</h1>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <label class="h2">User Name</label>
-          <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="username" onChange={this.handleOnChange} ref={this.username}/>
+
+          <label class="h4">User Name</label>
+          <input type="text" class="form-control form-control-lg" name="username" aria-describedby="emailHelp" placeholder="username" onChange={this.handleOnChange} ref={this.username}/>
 
         </div>
         <div class="form-group">
-          <label class="h2">Password</label>
-          <input type="password" name="password"class="form-control" placeholder="password" onChange={this.handleOnChange} ref={this.password}/>
+          <label class="h4">Password</label>
+          <input type="password" name="password"class="form-control form-control-lg" placeholder="password" onChange={this.handleOnChange} ref={this.password}/>
         </div>
-          <input type="submit" id="loginButton" class="btn btn-primary" value="log in" />
-        <button type="button" id="logoutButton" class="btn btn-primary" onClick={this.logout}>log out</button>
+          <input type="submit" id="loginButton" class="btn btn-primary btn-lg" value="Log In" />
+        <button type="button" id="logoutButton" class="btn btn-primary btn-lg" onClick={this.newUser}>New User</button>
 
       </form>
     </div>
