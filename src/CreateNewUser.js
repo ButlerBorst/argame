@@ -52,12 +52,12 @@ class CreateNewUser extends Component {
 
       <div className="firstpage">
       <div>
-      <br></br>
+      
       <h1 class="h1 text-center"> Welcome To </h1>
         <img id="logo" class="center" src={image} />
           <form onSubmit={this.handleSubmit}>
             <div class="form-group">
-            <h1 class="h2 text-center"> Create Account </h1>
+            <h1 class="h3 text-center"> Create Account </h1>
 
 
             <br></br>
@@ -65,7 +65,7 @@ class CreateNewUser extends Component {
               <input onChange={this.handleChange} class="form-control form-control-lg" type="text" name="username" placeholder="username" value={this.state.username} ref={input => this.username = input} />
             </div>
 
-          <br></br>
+
           <div class="form-group">
             <label class="h4"> Password</label>
             <input onChange={this.handleChange} class="form-control form-control-lg" type="password" name="password" placeholder="password" value={this.state.password} />

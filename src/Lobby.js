@@ -86,7 +86,7 @@ class Lobby extends Component  {
   render(){
     return(
       <div class="firstpage">
-      <br></br>
+
       <h1 class="h1 text-center"> Play Battle-AR </h1>
       <img id="logo" class="center" src={image} />
 
@@ -95,7 +95,7 @@ class Lobby extends Component  {
       <form onSubmit={this.handleJoinGame}>
         <div class="form-group">
           <label class="h4" for="game room">Game Room</label>
-          <input onChange={this.gameState} type="text" class="form-control form-control-lg" placeholder="Enter Game Room Number"/>
+          <input onChange={this.gameState} type="text" class="form-control form-control-md" placeholder="Enter Game Room Number"/>
         </div>
 
 

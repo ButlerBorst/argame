@@ -118,12 +118,11 @@ class Login extends Component {
 
       <form onSubmit={this.login}>
         <div class="form-group">
-          <br></br>
+
           <h1 class="display-5 text-center">Please Log In</h1>
-        
+
           <img id="logo" class="center" src={image} />
-          <br></br>
-          <br></br>
+        
 
           <label class="h4">User Name</label>
           <input type="text" class="form-control form-control-lg" name="username" aria-describedby="emailHelp" placeholder="username" onChange={this.handleOnChange} ref={this.username}/>
