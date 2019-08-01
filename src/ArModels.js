@@ -8,8 +8,10 @@ class arModels extends Component {
   state = {
     player1: "",
     player2: "",
-    win: 0,
-    login:0,
+    player1win: 0,
+    player1loss:0,
+    player2win: 0,
+    player2loss: 0,
     points1: 0,
     points2: 0
   }
@@ -37,8 +39,12 @@ class arModels extends Component {
       if(players[0] && players[1]){
         this.setState({
           player1: players[0],
+          player1win: players[0].win,
+          player1loss: players[0].loss,
           points1: players[0].points,
           player2: players[1],
+          player2win: players[1].win,
+          player2loss: players[1].loss,
           points2: players[1].points
         })
         console.log("sending to cable:", players[1].id, players[1].points, players[1].username)
@@ -61,8 +67,144 @@ class arModels extends Component {
         })
       }
     })
+  }
+
+  componentDidUpdate(){
+    if(this.state.points1 === 5){
+      setTimeout(() => {
+      this.handleWin()
+      this.handlePlayer2Loss()
+    }, 5000)
+    }
+    if(this.state.points2 === 5){
+      setTimeout(() => {
+      this.handleLoss()
+      this.handlePlayer2Win()
+        }, 5000)
+    }
+  }
+
+  winModal = () => {
+    if(this.state.points1 === 5){
+    return (
+      <h1>Testing</h1>
+    )
+  }
 }
 
+  handleWin = () => {
+   const token = localStorage.getItem('jwt');
+
+   return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.state.player1.id}`,{
+     method: "PATCH",
+     headers: {'Content-Type': 'application/json',
+             'Accept': 'application/json',
+             'Authorization': 'Bearer ' + token
+           },
+    body: JSON.stringify({
+    win: this.state.player1win + 1,
+    points:0 })
+   })
+   .then(res => res.json())
+   .then(json => {
+
+       this.setState({
+         player1win: json.win,
+         points1: json.points
+       })
+       console.log(json)
+
+   })
+ }
+     // this.setState({
+     //   player1win: json.win,
+     //   points1: json.points
+     // })
+     // console.log(json)
+
+
+ // setTimeout(()=> {
+ //   console.log("waited for timeout  already")
+ //   this.sub.send({
+ //     user_id: players[1].id,
+ //     points: players[1].points,
+ //     username: players[1].username
+ //   })
+ // }, 5000);
+
+ handlePlayer2Win = () => {
+  const token = localStorage.getItem('jwt');
+
+  return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.state.player2.id}`,{
+    method: "PATCH",
+    headers: {'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+   body: JSON.stringify({
+   win: this.state.player2win + 1,
+   points:0 })
+  })
+  .then(res => res.json())
+  .then(json => {
+
+    this.setState({
+      player2win: json.win,
+      points2: json.points
+    })
+    console.log(json)
+  })
+
+}
+
+ handleLoss = () => {
+  const token = localStorage.getItem('jwt');
+
+  return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.state.player1.id}`,{
+    method: "PATCH",
+    headers: {'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+   body: JSON.stringify({
+   loss: this.state.player1loss + 1,
+   points:0 })
+  })
+  .then(res => res.json())
+  .then(json => {
+    console.log(json)
+    this.setState({
+      player1loss: json.lose,
+      points1: json.points
+    })
+  })
+
+}
+
+handlePlayer2Loss = () => {
+ const token = localStorage.getItem('jwt');
+
+ return fetch(`https://tabletopargame.herokuapp.com/api/v1/users/${this.state.player2.id}`,{
+   method: "PATCH",
+   headers: {'Content-Type': 'application/json',
+           'Accept': 'application/json',
+           'Authorization': 'Bearer ' + token
+         },
+  body: JSON.stringify({
+  loss: this.state.player2loss + 1,
+  points:0 })
+ })
+ .then(res => res.json())
+ .then(json => {
+
+   this.setState({
+     player2loss: json.loss,
+     points2: json.points
+   })
+   console.log(json)
+ })
+
+}
 
   handleReceiveNewGame = (args) => {
     const {user_id, points, username} = args
@@ -83,34 +225,8 @@ class arModels extends Component {
         })
       }
     }
-     // if (this.state.player1.id === user_id) {
-     //   this.setState({
-     //     points: points
-     //   })
-     // } if ((points === 0 || points) && (this.state.player2.id === user_id)) {
-     //   this.setState({
-     //     opponentsPoints: points
-     //   })
-     // } if (user_id !==  this.state.player1.id && this.state.player2 == "" ) {
-     //   this.setState({
-     //     player2: {id: user_id, username: username},
-     //     opponentsPoints: points
-     //   })
-     // }
  }
- //  handleReceiveNewGame = ({points, opponentsPoints}) => {
- //    console.log(points, opponentsPoints)
- //   if (points === 0 || points) {
- //     this.setState({
- //       points
- //     })
- //   }
- //   if (opponentsPoints === 0 || opponentsPoints) {
- //       this.setState({
- //         opponentsPoints
- //       })
- //     }
- // }
+
 
 
   handlePlusClick = () => {
@@ -173,45 +289,42 @@ class arModels extends Component {
 
         };
 
+      handleHomeClick = () => {
+        this.props.history.push('./lobby')
+      }
+
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring13/Ring13.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0 ">
+      //   <a-animation attribute="rotation" to="360 0 0" dur="40000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+      //
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring14/Ring14.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+      //   <a-animation attribute="rotation" to="0 -360 0" dur="30000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+      //
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring15/Ring15.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+      //   <a-animation attribute="rotation" to="360 0 0" dur="20000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+      //
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring16/Ring16.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+      //   <a-animation attribute="rotation" to="0 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+      //
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring17/Ring17.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+      //   <a-animation attribute="rotation" to="360 0 0" dur="5000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+      //
+      // <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Blackhole/Blackhole.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+      //   <a-animation attribute="rotation" to="0 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
+      // </a-entity>
+
   render() {
 
     return (
       <div>
+
         <div id="modal-button">
-          <button type="button" className="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-home"></i>
+          <button onClick={this.handleHomeClick} type="button" className="btn btn-primary btn-circle btn-lg" data-toggle="modal" data-target="#exampleModalCenter"><i className="fa fa-home"></i>
           </button>
-        </div>
-
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">tARble</h5>
-              </div>
-              <div class="modal-body">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                  Home
-                </button>
-
-                <br></br>
-                <br></br>
-
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                  Reset Game
-                </button>
-
-                <br></br>
-                <br></br>
-
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                  LeaderBoard
-                </button>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div id="user-1">
@@ -219,6 +332,24 @@ class arModels extends Component {
              {this.state.player1.username}    <span class="badge badge-light">{this.state.points1}</span>
           </button>
         </div>
+
+
+
+        <div id="winnerCard" class="card border-primary mb-3">
+          {this.state.points1 ===5 ? <div class="card-body">
+            Winner: {this.state.player1.username}
+          </div>
+           :null}
+        </div>
+
+        <div id="winnerCard" class="card border-danger mb-3">
+          {this.state.points2 ===5 ? <div class="card-body">
+            Winner: {this.state.player2.username}
+          </div>
+           :null}
+        </div>
+
+
 
         <div id="user-2">
           <button type="button" class="btn btn-danger" disabled>
@@ -270,45 +401,21 @@ class arModels extends Component {
           </a-entity>
         </a-marker>
 
+        </a-light>
 
-      <a-light type="point"  color="pink" position="-2 -90 0"></a-light>
-        <a-light type="point" color="pink" position="2 90 0"></a-light>
+
           <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-black-hole-marker.patt'>
 
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring11/Ring11.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="360 360 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/simplerblackhole/simplerblackhole.gltf"  scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="0 0 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
 
 
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring12/Ring12.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="-360 -360 0" dur="50000" repeat="indefinite" easing="linear"></a-animation>
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/darkerblackholering/darkerblackholering.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+              <a-animation attribute="rotation" to="0 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
 
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring13/Ring13.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0 ">
-              <a-animation attribute="rotation" to="360 360 0" dur="40000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring14/Ring14.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="-360 -360 0" dur="30000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring15/Ring15.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="360 360 0" dur="20000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring16/Ring16.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="-360 -360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Ring17/Ring17.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="360 360 0" dur="5000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
-
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/Blackhole/Blackhole.gltf" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
-              <a-animation attribute="rotation" to="0 360 0" dur="10000" repeat="indefinite" easing="linear"></a-animation>
-            </a-entity>
           </a-marker>
-        </a-light>
 
       <a-entity camera></a-entity>
     </a-scene>

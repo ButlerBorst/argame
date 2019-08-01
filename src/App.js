@@ -12,7 +12,8 @@ class App extends Component {
 
   state = {
     user: "",
-    gameRoom: ''
+    gameRoom: '',
+    leaderboard: []
   }
 
   constructor(){
@@ -22,6 +23,9 @@ class App extends Component {
     }
 
   }
+
+
+
 
   handleCreateGame = () => {
     console.log("in fetch")
@@ -67,6 +71,7 @@ class App extends Component {
     }).then( resp => resp.json())
       .then( data => {
         console.log(data)
+        this.setState({leaderboard: data.data})
       })
   }
 
@@ -90,9 +95,17 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(json => {
+      if(json.user){
       console.log('profile:', json)
       // user should be in App state, not Login state, so it can easily be passed to Lobby + beyond
       this.setState({user: json.user, gameRoom: json.user.game_id })
+    }else{
+      // there was a token in local storage, but the backend rejected it
+      // so instead let's get rid of that token
+      console.log("no profile", json)
+      localStorage.setItem('jwt', "")
+      this.props.history.push("./login")
+    }
     })
   }
 

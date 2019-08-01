@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { withRouter } from 'react-router';
 import {BrowserRouter, Redirect,Route} from 'react-router-dom'
-
+import LeaderBoard from './LeaderBoard'
 
 class Lobby extends Component  {
 
   state = {
-    joinGameId: ''
+    joinGameId: '',
+    leaderboard: []
   }
 
  //  handleCreateGame = () => {
@@ -83,7 +84,23 @@ class Lobby extends Component  {
       this.props.history.push("./play-game")
    }
 
+   handleLeaderBoard = () => {
+           const token = localStorage.getItem('jwt');
 
+           fetch('https://tabletopargame.herokuapp.com/games', {
+             headers: {
+               'Authorization': 'Bearer ' + token
+             }
+           })
+           .then(res => res.json())
+           .then(leaderboard => {
+             console.log('leaderboard:', leaderboard)
+             this.setState({leaderboard: leaderboard.data})
+
+           })
+         }
+
+// btn-circle btn-lg
 
   render(){
     return(
@@ -112,7 +129,15 @@ class Lobby extends Component  {
         <input type="submit" onClick={this.props.handleCreateGame} className="btn btn-primary" value="Create Game"/>
         </div>
         <h1 class="display-4 text-center">{this.props.gameRoom}</h1>
+
+        <div id="leaderboard-button" class="text-center">
+          <input  type="submit" onClick={this.handleLeaderBoard} className="btn btn-primary " data-toggle="modal" data-target="#exampleModalCenter" value="Leader Board"/>
+        </div>
+
+        <LeaderBoard leaderboardprops={this.state.leaderboard} />
+
       </div>
+
 
     )
   }
