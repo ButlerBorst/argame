@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 
 const LeaderBoardModal = props => {
   const table = props.leaderboardprops.map((user, index) => {
+    console.log(user.loss_count)
         return (
 
 

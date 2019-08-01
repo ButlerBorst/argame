@@ -174,7 +174,7 @@ class arModels extends Component {
   .then(json => {
     console.log(json)
     this.setState({
-      player1loss: json.lose,
+      player1loss: json.loss,
       points1: json.points
     })
   })
