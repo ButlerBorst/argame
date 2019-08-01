@@ -104,7 +104,6 @@ class App extends Component {
       // so instead let's get rid of that token
       console.log("no profile", json)
       localStorage.setItem('jwt', "")
-      this.props.history.push("./login")
     }
     })
   }
