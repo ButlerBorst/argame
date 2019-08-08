@@ -443,7 +443,7 @@ handlePlayer2Loss = () => {
 
 
           <a-marker preset='custom' type='pattern' url='https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/pattern-black-hole-marker.patt'>
-            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/simplerblackhole/simplerblackhole.gltf"  scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
+            <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/simplerblackhole/simplerblackhole.gltf"  scale="-9 9 9" rotation="0 0 0" position="0 -5 -10">
               <a-animation attribute="rotation" to="0 0 0" dur="100000" repeat="indefinite" easing="linear"></a-animation>
             </a-entity>
             <a-entity gltf-model="https://raw.githubusercontent.com/ButlerBorst/ar-project-glitch/master/assets/darkerblackholering/darkerblackholering.gltf" material="side: double" scale="-9 9 9" rotation="0 0 0" position="0 -.5 0">
